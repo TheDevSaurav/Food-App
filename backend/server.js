@@ -14,7 +14,17 @@ const port = process.env.PORT || 4000;
 
 // middlewares
 app.use(express.json())
-app.use(cors());
+const cors = require("cors");
+
+app.use(cors({
+  origin: [
+    "https://tomato-azzt.onrender.com",  // your frontend
+    "https://admin-app-8x8i.onrender.com" // if admin frontend also needs to call backend
+  ],
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
+}));
+
 
 // db connection
 connectDB()
