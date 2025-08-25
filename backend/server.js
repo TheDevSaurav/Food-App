@@ -14,7 +14,17 @@ const port = process.env.PORT || 4000;
 
 // middlewares
 app.use(express.json())
-app.use(cors())
+const cors = require("cors");
+
+app.use(cors({
+  origin: [
+    "https://food-app-iqxz.onrender.com",   // frontend
+    "https://admin-app-8x8i.onrender.com"   // admin
+  ],
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+  credentials: true
+}));
+
 
 // db connection
 connectDB()
