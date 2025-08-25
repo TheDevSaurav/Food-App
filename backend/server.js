@@ -1,43 +1,44 @@
-import express  from "express"
-import cors from 'cors'
-import { connectDB } from "./config/db.js"
-import userRouter from "./routes/userRoute.js"
-import foodRouter from "./routes/foodRoute.js"
-import 'dotenv/config'
-import cartRouter from "./routes/cartRoute.js"
-import orderRouter from "./routes/orderRoute.js"
+import express from "express";
+import cors from "cors";
+import { connectDB } from "./config/db.js";
+import userRouter from "./routes/userRoute.js";
+import foodRouter from "./routes/foodRoute.js";
+import "dotenv/config";
+import cartRouter from "./routes/cartRoute.js";
+import orderRouter from "./routes/orderRoute.js";
 
 // app config
-const app = express()
+const app = express();
 const port = process.env.PORT || 4000;
 
-
 // middlewares
-app.use(express.json())
-const cors = require("cors");
+app.use(express.json());
 
-app.use(cors({
-  origin: [
-    "https://tomato-azzt.onrender.com",  // your frontend
-    "https://admin-app-8x8i.onrender.com" // if admin frontend also needs to call backend
-  ],
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  credentials: true
-}));
-
+app.use(
+  cors({
+    origin: [
+      "https://tomato-azzt.onrender.com",   // frontend
+      "https://admin-app-8x8i.onrender.com" // admin
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  })
+);
 
 // db connection
-connectDB()
+connectDB();
 
 // api endpoints
-app.use("/api/user", userRouter)
-app.use("/api/food", foodRouter)
-app.use("/images",express.static('uploads'))
-app.use("/api/cart", cartRouter)
-app.use("/api/order",orderRouter)
+app.use("/api/user", userRouter);
+app.use("/api/food", foodRouter);
+app.use("/images", express.static("uploads"));
+app.use("/api/cart", cartRouter);
+app.use("/api/order", orderRouter);
 
 app.get("/", (req, res) => {
-    res.send("API Working")
-  });
+  res.send("API Working");
+});
 
-app.listen(port, () => console.log(`Server started on http://localhost:${port}`))
+app.listen(port, () =>
+  console.log(`Server started on http://localhost:${port}`)
+);
